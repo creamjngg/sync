@@ -2,7 +2,9 @@
 local library = {}
 library.Flags = {}
 library.DefaultColor = Color3.fromRGB(56, 207, 154)
-
+function roundNumber(num, numDecimalPlaces)
+  return tonumber(string.format("%." .. (numDecimalPlaces or 4) .. "f", num))
+end
 local Players = game:GetService("Players")
 local Player = Players.LocalPlayer
 
@@ -1087,7 +1089,7 @@ dragSliderButton.MouseButton1Down:Connect(function() -- Skidded from material ui
 	MouseMove = Mouse.Move:Connect(function()
 		local Px = library:GetXY(outerSlider)
 		local SizeFromScale = (MinSize +  (MaxSize - MinSize)) * Px
-		local Value = Info.Minimum + ((Info.Maximum - Info.Minimum) * Px)
+		local Value = roundNumber(Info.Minimum + ((Info.Maximum - Info.Minimum) * Px),4)
 		SizeFromScale = SizeFromScale - (SizeFromScale % 2)
 		TweenService:Create(innerSlider, TweenInfo.new(0.1), {Size = UDim2.new(Px,0,0,4)}):Play()
 		TweenService:Create(dragSlider, TweenInfo.new(0.1), {Position = UDim2.new(Px,-4,0,2)}):Play()
